@@ -44,6 +44,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Development}"
       ASPNETCORE_HTTP_PORTS: "8080"
+      DEV_USER_ID: "5e530cd5-924a-445d-84ef-69bfb21ee241"
       DB_HOST: postgres
       DB_PORT: "5432"
       DB_NAME: "${DB_NAME:?DB_NAME is required}"

@@ -24,17 +24,27 @@ The API is available at:
 http://localhost:8080/swagger
 ```
 
+To add optional demo data after the migrations service exits successfully, keep Compose running and run this from `docker/local` in another terminal:
+
+```bash
+docker compose exec -T postgres sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' < seed-demo.sql
+```
+
+`seed-demo.sql` inserts sample users, orders, tasks, time entries, and reviews. It is not run automatically. You can run it again without duplicating the sample rows or overwriting edits to them.
+
 Stop the environment:
 
 ```bash
 docker compose down
 ```
 
-Delete the database volume and recreate the database from migrations:
+To start with an empty database, delete the database volume (this removes all database data), then start Compose again. Run the seed command above again if you want demo data:
 
 ```bash
 docker compose down -v
+docker compose up --build
 ```
+
 The migrations service is expected to exit successfully after applying migrations.
 
 Run it from the `docker/local` directory:
