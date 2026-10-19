@@ -24,6 +24,10 @@ services:
       DB_NAME: "${DB_NAME:?DB_NAME is required}"
       DB_USERNAME: "${DB_USERNAME:?DB_USERNAME is required}"
       DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required}"
+      JWT_ISSUER: "${JWT_ISSUER:?JWT_ISSUER is required}"
+      JWT_AUDIENCE: "${JWT_AUDIENCE:?JWT_AUDIENCE is required}"
+      JWT_EXPIRES_MINUTES: "${JWT_EXPIRES_MINUTES:?JWT_EXPIRES_MINUTES is required}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -50,6 +54,10 @@ services:
       DB_NAME: "${DB_NAME:?DB_NAME is required}"
       DB_USERNAME: "${DB_USERNAME:?DB_USERNAME is required}"
       DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required}"
+      JWT_ISSUER: "${JWT_ISSUER:?JWT_ISSUER is required}"
+      JWT_AUDIENCE: "${JWT_AUDIENCE:?JWT_AUDIENCE is required}"
+      JWT_EXPIRES_MINUTES: "${JWT_EXPIRES_MINUTES:?JWT_EXPIRES_MINUTES is required}"
     depends_on:
       migrations:
         condition: service_completed_successfully
