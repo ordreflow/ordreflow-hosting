@@ -58,6 +58,10 @@ services:
       JWT_ISSUER: "${JWT_ISSUER:?JWT_ISSUER is required}"
       JWT_AUDIENCE: "${JWT_AUDIENCE:?JWT_AUDIENCE is required}"
       JWT_EXPIRES_MINUTES: "${JWT_EXPIRES_MINUTES:?JWT_EXPIRES_MINUTES is required}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}
+      ADMIN_NAME: "${ADMIN_NAME}"
+
     depends_on:
       migrations:
         condition: service_completed_successfully
