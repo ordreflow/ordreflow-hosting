@@ -1,0 +1,413 @@
+{
+  "lockfile-version": 1,
+  "manifest": {
+    "schema-version": "1.16.0",
+    "install": {
+      "curl": {
+        "pkg-path": "curl"
+      },
+      "jq": {
+        "pkg-path": "jq"
+      },
+      "openssh": {
+        "pkg-path": "openssh"
+      },
+      "terraform": {
+        "pkg-path": "terraform",
+        "version": "1.16.5"
+      }
+    },
+    "options": {}
+  },
+  "packages": [
+    {
+      "attr_path": "curl",
+      "broken": false,
+      "derivation": "/nix/store/6xg7k2raprnj3sm5ixizcz93nq27nhxa-curl-8.22.0.drv",
+      "description": "Command line tool for transferring files with URL syntax",
+      "install_id": "curl",
+      "license": "curl",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "curl-8.22.0",
+      "pname": "curl",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T11:55:14.431129Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.22.0",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/926mdf6phzrip719fg9si7vvxyi75m02-curl-8.22.0-bin",
+        "dev": "/nix/store/nn0v9s6vway00rhw5yladp701y37xaf7-curl-8.22.0-dev",
+        "devdoc": "/nix/store/mqykl2v8nr478gqhd5qlxgk30sj4hkvy-curl-8.22.0-devdoc",
+        "man": "/nix/store/8hsfksyih9g72sr8m2a5cyrg610cjxgi-curl-8.22.0-man",
+        "out": "/nix/store/dkv7hd5fx8rnhyg59hy7yw8pah3swglp-curl-8.22.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "curl",
+      "broken": false,
+      "derivation": "/nix/store/aday0kgzvckzm94k88kmxbhafabl4959-curl-8.22.0.drv",
+      "description": "Command line tool for transferring files with URL syntax",
+      "install_id": "curl",
+      "license": "curl",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "curl-8.22.0",
+      "pname": "curl",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T13:06:35.351482Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.22.0",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/nmh3hx6da4i82adfi8z1qsg65ynw112d-curl-8.22.0-bin",
+        "debug": "/nix/store/8bk4vjwjdk46bpjnsd98401dv7c8g694-curl-8.22.0-debug",
+        "dev": "/nix/store/a56nd2kdbmjrkc1yndhfhs9zfnvf4926-curl-8.22.0-dev",
+        "devdoc": "/nix/store/76q7a4j53ikddbbfld5b19pmx0z6klpa-curl-8.22.0-devdoc",
+        "man": "/nix/store/pxjvd1rjykhxp5jlj0aa1gq98plw3f0s-curl-8.22.0-man",
+        "out": "/nix/store/r5w60683qmv7p1lzdj6xd9i0lms8b42i-curl-8.22.0"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "curl",
+      "broken": false,
+      "derivation": "/nix/store/kgrz6c06xdwaqpp17sdm6wl64a4wn7a3-curl-8.22.0.drv",
+      "description": "Command line tool for transferring files with URL syntax",
+      "install_id": "curl",
+      "license": "curl",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "curl-8.22.0",
+      "pname": "curl",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T14:24:55.581384Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "8.22.0",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/5lpg7j8y8lf8c4zv318yi4rmgyn5yhip-curl-8.22.0-bin",
+        "debug": "/nix/store/9ywi79rq9hns417qm0n2dnwmqysy5lk5-curl-8.22.0-debug",
+        "dev": "/nix/store/zxvysjs44vl0hh0iqmh1s9jfjv9725x9-curl-8.22.0-dev",
+        "devdoc": "/nix/store/w4ixpi64gacfgkazq63fbmpxp5vqkfz5-curl-8.22.0-devdoc",
+        "man": "/nix/store/g519d0jpgihgim6r3n83sb2z5krkm391-curl-8.22.0-man",
+        "out": "/nix/store/p9i1b7jgfj4fl5bx557jnwbdsafl434i-curl-8.22.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/hg65cbj37jnlxcz42jzsb4wbvh71a824-jq-1.8.2.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "jq-1.8.2",
+      "pname": "jq",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T11:55:14.578716Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.2",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/vvp6grz676r5jvsry7sf7kxqb4lwdd62-jq-1.8.2-bin",
+        "dev": "/nix/store/xyclm6bwinnb3f8zmm68s3swfhgnlphx-jq-1.8.2-dev",
+        "doc": "/nix/store/n3nximdbin1mj1ji5hwv4nacy6yp5dn5-jq-1.8.2-doc",
+        "man": "/nix/store/makwmvlz85ngimxrznbisy864hvc3g0s-jq-1.8.2-man",
+        "out": "/nix/store/hdhazyigrpwh5ccrh26fsnj9m5al192a-jq-1.8.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/8971z1s9mhqxm4h5cwii8k1alknbvnk8-jq-1.8.2.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "jq-1.8.2",
+      "pname": "jq",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T13:06:35.471439Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.2",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/16bc59xb22679a0mdzvlirr9n6i8ca8m-jq-1.8.2-bin",
+        "dev": "/nix/store/cnzj4nl177snn6b0chi3xwp87vfk5m7j-jq-1.8.2-dev",
+        "doc": "/nix/store/xxd5jc37da38qlbjxqc05x77x2mvv4hw-jq-1.8.2-doc",
+        "man": "/nix/store/35czxi6qcb15jwlv2n2aksahkx4yr4wd-jq-1.8.2-man",
+        "out": "/nix/store/x8g0a13kma26kca8f5a1w6f0n54jyp65-jq-1.8.2"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "jq",
+      "broken": false,
+      "derivation": "/nix/store/0d3ci04071x1i8kqdssxfhhcds4v0nsc-jq-1.8.2.drv",
+      "description": "Lightweight and flexible command-line JSON processor",
+      "install_id": "jq",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "jq-1.8.2",
+      "pname": "jq",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T14:24:55.788009Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.8.2",
+      "outputs_to_install": [
+        "bin",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/9l0j15jg8634hkb6d4c9y95mpxl0nhrd-jq-1.8.2-bin",
+        "dev": "/nix/store/za20v1vwh492da54qj2mi71lf2m7k5ra-jq-1.8.2-dev",
+        "doc": "/nix/store/5hlxy34nbli4axjjkpm7d74x16c3l3h5-jq-1.8.2-doc",
+        "man": "/nix/store/kyc6a29vbm7k4nh84bj17gxaljnic3a9-jq-1.8.2-man",
+        "out": "/nix/store/hcagcif4hcac22rrspzgg8p9g0aqs741-jq-1.8.2"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssh",
+      "broken": false,
+      "derivation": "/nix/store/ndrcqvhw03q3a3fmnimyz9zixils19aa-openssh-10.6p1.drv",
+      "description": "Implementation of the SSH protocol",
+      "install_id": "openssh",
+      "license": "BSD-2-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "openssh-10.6p1",
+      "pname": "openssh",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T11:55:14.637312Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "10.6p1",
+      "outputs_to_install": [
+        "man",
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/3xvi4d4lg2285kw8kicszg8zy0larzjj-openssh-10.6p1-dev",
+        "man": "/nix/store/a75ksxachz3n893xcg4hwqdlp4036xx0-openssh-10.6p1-man",
+        "out": "/nix/store/k1832sln1hh462g2hsd6mb7mismfvr8s-openssh-10.6p1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssh",
+      "broken": false,
+      "derivation": "/nix/store/3kav9ca3qqakzja140igvbjlm6vy39mw-openssh-10.6p1.drv",
+      "description": "Implementation of the SSH protocol",
+      "install_id": "openssh",
+      "license": "BSD-2-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "openssh-10.6p1",
+      "pname": "openssh",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T13:06:35.589722Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "10.6p1",
+      "outputs_to_install": [
+        "man",
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/s3lyq2kpwx82c1k4f4w1id8qi1fk90ps-openssh-10.6p1-dev",
+        "man": "/nix/store/6indgw4030h7s4mi59fjcwiq8kjn479y-openssh-10.6p1-man",
+        "out": "/nix/store/mf6gc71f8f4jfkl5xshyp2j77adp2zjb-openssh-10.6p1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssh",
+      "broken": false,
+      "derivation": "/nix/store/9aj0hrp0ihvybrvn36bpmcf2da9pbfvd-openssh-10.6p1.drv",
+      "description": "Implementation of the SSH protocol",
+      "install_id": "openssh",
+      "license": "BSD-2-Clause",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "openssh-10.6p1",
+      "pname": "openssh",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T14:24:55.891957Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "10.6p1",
+      "outputs_to_install": [
+        "man",
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/gk5b5v6bwcda2xzcr5xxyn3bvd7lm9yr-openssh-10.6p1-dev",
+        "man": "/nix/store/cw9mcxybpp75m6r7b9m8dzwkaamvcxzm-openssh-10.6p1-man",
+        "out": "/nix/store/cy1kp9s0vklml5di3hddw0x4k38bixv6-openssh-10.6p1"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "terraform",
+      "broken": false,
+      "derivation": "/nix/store/3q6gnydv5jlxdx766nmn8rj0bvzaanzx-terraform-1.16.5.drv",
+      "description": "Tool for building, changing, and versioning infrastructure",
+      "install_id": "terraform",
+      "license": "BUSL-1.1",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "terraform-1.16.5",
+      "pname": "terraform",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T11:55:15.227313Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "1.16.5",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/y5pb3pa9s153lgrdgz0g4cm5achapqnx-terraform-1.16.5"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "terraform",
+      "broken": false,
+      "derivation": "/nix/store/9k9693yy9613bph8rqi7r8lynz6rl77d-terraform-1.16.5.drv",
+      "description": "Tool for building, changing, and versioning infrastructure",
+      "install_id": "terraform",
+      "license": "BUSL-1.1",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "terraform-1.16.5",
+      "pname": "terraform",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T13:06:35.772986Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "1.16.5",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/q81iv0lyq82g3yzhzaf94jj9gvvq6b6z-terraform-1.16.5"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "terraform",
+      "broken": false,
+      "derivation": "/nix/store/zhg32170xzy0vr50glinjam55v4vxxfs-terraform-1.16.5.drv",
+      "description": "Tool for building, changing, and versioning infrastructure",
+      "install_id": "terraform",
+      "license": "BUSL-1.1",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "name": "terraform-1.16.5",
+      "pname": "terraform",
+      "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+      "rev_count": 1095516,
+      "rev_date": "2026-10-17T04:10:52Z",
+      "scrape_date": "2026-10-20T14:24:56.147776Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "1.16.5",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/r0inriqibcpixazyy71ygcm3qffzx2s1-terraform-1.16.5"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    }
+  ]
+}

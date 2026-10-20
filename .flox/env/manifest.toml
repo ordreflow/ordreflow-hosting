@@ -1,0 +1,8 @@
+schema-version = "1.16.0"
+
+[install]
+terraform.pkg-path = "terraform"
+terraform.version = "1.16.5"
+curl.pkg-path = "curl"
+jq.pkg-path = "jq"
+openssh.pkg-path = "openssh"
