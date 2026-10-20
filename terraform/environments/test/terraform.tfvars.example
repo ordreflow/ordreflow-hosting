@@ -1,0 +1,34 @@
+# Copy to terraform.tfvars. See README.md for where to obtain each value.
+# Pick a new full hostname under your active Cloudflare domain. Terraform
+# creates the A record; do not create it manually first.
+hostname           = "test.example.com"
+
+
+# Cloudflare domain Overview -> API -> Zone ID (not Account ID).
+cloudflare_zone_id = "replace-with-your-cloudflare-zone-id"
+
+
+# Hetzner project -> Security -> SSH Keys -> exact name of your added public key.
+ssh_key_name       = "replace-with-your-hetzner-ssh-key-name"
+
+# Run: curl -4 https://api.ipify.org  on your own network. Append /32.
+# 203.0.113.10/32 is a documentation-only address; replace it or SSH will fail.
+ssh_allowed_cidrs  = ["203.0.113.10/32"]
+
+# Copy the full references (including real version tags) from your registry.
+# These ghcr.io names/tags are illustrative; confirm each published package.
+# API and migration images must be built from the same backend revision.
+api_image        = "ghcr.io/ordreflow/ordreflow-api:replace-with-version"
+frontend_image   = "ghcr.io/ordreflow/ordreflow-frontend:replace-with-version"
+migrations_image = "ghcr.io/ordreflow/ordreflow-migrations:replace-with-version"
+
+
+# Optional Hetzner settings. Defaults: 
+# server_name = "ordreflow-test", # server_type = "cx23", location = "fsn1". Uncomment to change them:
+
+# server_name = "ordreflow-test-yourname"
+# server_type = "cx23"
+# location    = "fsn1"
+
+# HCLOUD_TOKEN and CLOUDFLARE_API_TOKEN are shell environment variables.
+# Never put API tokens or your SSH private key in this file.
