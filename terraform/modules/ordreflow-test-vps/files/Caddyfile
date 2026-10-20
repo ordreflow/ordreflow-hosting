@@ -1,0 +1,4 @@
+{$TEST_DOMAIN} {
+  encode gzip
+  reverse_proxy frontend:8080
+}
