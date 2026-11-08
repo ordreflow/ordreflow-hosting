@@ -116,11 +116,16 @@ JOIN managers ON managers.slot = ((n - 1) % 4) + 1
 JOIN users manager ON manager.id = managers.id
 ON CONFLICT DO NOTHING;
 
-INSERT INTO tasks (id, order_id, title, description) VALUES
+INSERT INTO tasks (id, order_id, title, description, status, closed_at)
+SELECT seed.id::uuid, seed.order_id::uuid, seed.title, seed.description,
+       orders.status, orders.closed_at
+FROM (VALUES
     ('b0000000-0000-4000-8000-000000000001', 'a0000000-0000-4000-8000-000000000001', 'Design landing page', 'Create responsive landing page mockups.'),
     ('b0000000-0000-4000-8000-000000000002', 'a0000000-0000-4000-8000-000000000001', 'Implement checkout', 'Build and test the checkout flow.'),
     ('b0000000-0000-4000-8000-000000000003', 'a0000000-0000-4000-8000-000000000002', 'Set up notifications', 'Implement push notification preferences.'),
     ('b0000000-0000-4000-8000-000000000004', 'a0000000-0000-4000-8000-000000000003', 'Discovery interviews', 'Document customer interviews and findings.')
+) AS seed(id, order_id, title, description)
+JOIN orders ON orders.id = seed.order_id::uuid
 ON CONFLICT (id) DO NOTHING;
 
 WITH demo_orders(slot, id) AS (
@@ -131,11 +136,16 @@ WITH demo_orders(slot, id) AS (
     SELECT n + 3, md5('ordreflow:demo:order:' || n)::uuid
     FROM generate_series(1, 9) AS projects(n)
 )
-INSERT INTO tasks (id, order_id, title, description)
+-- Two tasks on open orders are already closed independently of their orders.
+INSERT INTO tasks (id, order_id, title, description, status, closed_at)
 SELECT md5('ordreflow:demo:task:' || n)::uuid, orders.id,
        (ARRAY['Plan', 'Design', 'Implement', 'Review', 'Test'])[((n - 1) % 5) + 1]
            || ' ' || orders.name,
-       'Demo work item for ' || orders.name || '.'
+       'Demo work item for ' || orders.name || '.',
+       CASE WHEN orders.status = 'Closed' OR n IN (1, 2) THEN 'Closed' ELSE 'Open' END,
+       CASE WHEN orders.status = 'Closed' THEN orders.closed_at
+            WHEN n IN (1, 2) THEN CURRENT_TIMESTAMP - INTERVAL '1 day'
+            ELSE NULL END
 FROM generate_series(1, 46) AS items(n)
 JOIN demo_orders ids ON ids.slot = ((n - 1) % 12) + 1
 JOIN orders ON orders.id = ids.id
@@ -158,7 +168,7 @@ INSERT INTO time_entry_reviews (id, time_entry_id, decision, reason, reviewed_at
 ON CONFLICT (id) DO NOTHING;
 
 -- Each active demo employee gets ten entries across up to seven weeks.
--- Select tasks on their manager's open orders so they can work with these
+-- Select open tasks on their manager's open orders so they can work with these
 -- entries through the API. Dates stay after the employee and order were created.
 -- Reviews are added only for newly inserted entries.
 WITH demo_employee_ids(id) AS (
@@ -174,7 +184,7 @@ WITH demo_employee_ids(id) AS (
            count(*) OVER (PARTITION BY orders.manager_id) AS task_count
     FROM tasks
     JOIN orders ON orders.id = tasks.order_id
-    WHERE orders.status = 'Open'
+    WHERE orders.status = 'Open' AND tasks.status = 'Open'
 ), inserted_entries AS (
     INSERT INTO time_entries (id, employee_id, task_id, date, hours, comment, status)
     SELECT md5('ordreflow:demo:time-entry:' || employee.id::text || ':' || period.n)::uuid,

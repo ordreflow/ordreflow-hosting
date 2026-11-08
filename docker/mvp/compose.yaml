@@ -1,0 +1,101 @@
+name: ordreflow-mvp
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${DB_NAME:?DB_NAME is required}"
+      POSTGRES_USER: "${DB_USERNAME:?DB_USERNAME is required}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+    ports:
+      - "127.0.0.1:${DB_PORT:-15439}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrations:
+    image: ghcr.io/ordreflow/ordreflow-migrations:mvp
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: "${DB_NAME:?DB_NAME is required}"
+      DB_USERNAME: "${DB_USERNAME:?DB_USERNAME is required}"
+      DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required}"
+      JWT_ISSUER: ordreflow-api
+      JWT_AUDIENCE: ordreflow-frontend
+      JWT_EXPIRES_MINUTES: "60"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command:
+      - dotnet
+      - ef
+      - database
+      - update
+      - --project
+      - Backend/Persistence/Persistence.csproj
+      - --startup-project
+      - Backend/WebApi/WebApi.csproj
+      - --configuration
+      - Release
+
+  seed:
+    image: postgres:17-alpine
+    environment:
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: "${DB_NAME:?DB_NAME is required}"
+      PGUSER: "${DB_USERNAME:?DB_USERNAME is required}"
+      PGPASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+    volumes:
+      - ../local/seed-demo.sql:/seed-demo.sql:ro
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-f", "/seed-demo.sql"]
+
+  api:
+    image: ghcr.io/ordreflow/ordreflow-api:mvp
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: "8080"
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: "${DB_NAME:?DB_NAME is required}"
+      DB_USERNAME: "${DB_USERNAME:?DB_USERNAME is required}"
+      DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required}"
+      JWT_ISSUER: ordreflow-api
+      JWT_AUDIENCE: ordreflow-frontend
+      JWT_EXPIRES_MINUTES: "60"
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:${API_PORT:-18088}:8080"
+
+  frontend:
+    image: ghcr.io/ordreflow/ordreflow-frontend:mvp
+    restart: unless-stopped
+    environment:
+      API_UPSTREAM: http://api:8080
+    ports:
+      - "0.0.0.0:${FRONTEND_PORT:-18089}:8080"
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/api/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  postgres_data:

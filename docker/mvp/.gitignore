@@ -1,0 +1,2 @@
+# Share the local MVP test defaults; other .env files remain ignored.
+!.env

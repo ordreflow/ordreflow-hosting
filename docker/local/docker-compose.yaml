@@ -1,12 +1,13 @@
 services:
   postgres:
     image: postgres:17-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: "${DB_NAME:?DB_NAME is required}"
       POSTGRES_USER: "${DB_USERNAME:?DB_USERNAME is required}"
       POSTGRES_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
     ports:
-      - "${DB_PORT:-DB_PORT}:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - ordreflow-postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -43,8 +44,24 @@ services:
       - --configuration
       - Release
 
+  seed:
+    image: postgres:17-alpine
+    environment:
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: "${DB_NAME:?DB_NAME is required}"
+      PGUSER: "${DB_USERNAME:?DB_USERNAME is required}"
+      PGPASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
+    volumes:
+      - ./seed-demo.sql:/seed-demo.sql:ro
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-f", "/seed-demo.sql"]
+
   api:
     image: ordreflow-api:local
+    restart: unless-stopped
     environment:
       ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Development}"
       ASPNETCORE_HTTP_PORTS: "8080"
@@ -63,13 +80,14 @@ services:
       ADMIN_NAME: "$ADMIN_NAME"
 
     depends_on:
-      migrations:
+      seed:
         condition: service_completed_successfully
     ports:
       - "${API_PORT:-8080}:8080"
   
   frontend:
     image: ordreflow-frontend:local
+    restart: unless-stopped
     environment:
       API_UPSTREAM: "http://api:8080"
     ports:
