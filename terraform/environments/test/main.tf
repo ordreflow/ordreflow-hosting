@@ -10,7 +10,7 @@ module "ordreflow_test_vps" {
   api_image         = var.api_image
   frontend_image    = var.frontend_image
   migrations_image  = var.migrations_image
-  demo_seed_sql     = file("${path.root}/../../../docker/local/seed-demo.sql")
+  demo_seed_sql     = file("${path.root}/../../../docker/mvp/seed-demo.sql")
 }
 
 # DNS-only lets Caddy request and renew the origin's HTTPS certificate directly.
