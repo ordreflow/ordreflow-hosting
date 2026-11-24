@@ -1,6 +1,6 @@
 # Disposable test environment
 
-Follow this guide from a Linux terminal (or Ubuntu in WSL). Terraform creates an Ubuntu VPS and firewall in Hetzner Cloud and a DNS record in Cloudflare. The VPS starts PostgreSQL, migrations, the [demo SQL](../../../docker/local/seed-demo.sql), the API, frontend, and HTTPS proxy automatically. You do **not** create the VPS, firewall, or DNS record by hand.
+Follow this guide from a Linux terminal (or Ubuntu in WSL). Terraform creates an Ubuntu VPS and firewall in Hetzner Cloud and a DNS record in Cloudflare. The VPS starts PostgreSQL, migrations, the [M2 demo SQL](../../../docker/mvp/seed-demo.sql), the API, frontend, and HTTPS proxy automatically. You do **not** create the VPS, firewall, or DNS record by hand.
 
 Choose **one person to run Terraform** for this test deployment. Terraform keeps a local state file that records what it created; another group member running `apply` from a different clone without that state could try to create a second server. Everyone can use the web app without SSH access.
 
@@ -59,7 +59,7 @@ You need the **full public image reference**, including an actual version tag or
 | `migrations_image` | Image published from `ordreflow-backend` using the Dockerfile's `migration` target |
 | `frontend_image` | Frontend image published from `ordreflow-frontend` |
 
-If they are in GitHub Container Registry, open the organization's [Packages page](https://github.com/orgs/ordreflow/packages), select each package and version, and copy its `ghcr.io/...:<tag>` reference from the install/pull instructions. The strings in `terraform.tfvars.example` are **illustrations**, not confirmed package names or published tags. Use API and migration images from the *same backend revision*. If a package or migration-target image is missing, publish it before deploying; Terraform pulls images but does not build them.
+If they are in GitHub Container Registry, open the organization's [Packages page](https://github.com/orgs/ordreflow/packages), select each package and version, and copy its `ghcr.io/...:<tag>` reference from the install/pull instructions. The strings in `terraform.tfvars.example` are **illustrations**, not confirmed package names or published tags. Use API and migration images from the *same backend revision*. The default `demo_seed_sql` in `main.tf` targets the older M2 schema; when selecting images built with the M3 migration, change that path to `docker/local/seed-demo.sql` as well. If a package or migration-target image is missing, publish it before deploying; Terraform pulls images but does not build them.
 
 ## 5. Fill in `terraform.tfvars`
 

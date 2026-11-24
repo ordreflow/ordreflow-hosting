@@ -55,7 +55,7 @@ services:
       PGUSER: "${DB_USERNAME:?DB_USERNAME is required}"
       PGPASSWORD: "${DB_PASSWORD:?DB_PASSWORD is required}"
     volumes:
-      - ../local/seed-demo.sql:/seed-demo.sql:ro
+      - ./seed-demo.sql:/seed-demo.sql:ro
     depends_on:
       migrations:
         condition: service_completed_successfully
