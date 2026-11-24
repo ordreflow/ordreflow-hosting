@@ -8,13 +8,15 @@ cp .env.example .env
 
 Have these images available in your local Docker image store: `ordreflow-migrations:local`, `ordreflow-api:local`, and `ordreflow-frontend:local`. Compose pulls `postgres:17-alpine` automatically when needed.
 
-Make sure `ordreflow-api:local` is the **backend runtime** image, not the Nginx frontend image. Check its entrypoint with:
+Make sure the API image is the **backend runtime** image, not the Nginx frontend image. Check its entrypoint with:
 
 ```bash
 docker image inspect ordreflow-api:local --format '{{json .Config.Entrypoint}}'
 ```
 
-It should run `dotnet WebApi.dll`. If it instead shows `/docker-entrypoint.sh`, tag the correct API image as `ordreflow-api:local` and recreate the API and frontend with `docker compose up -d --no-deps --force-recreate api frontend` (after the database, migrations, and seed have started).
+It should run `dotnet WebApi.dll`. If it instead shows `/docker-entrypoint.sh`, use a backend runtime image for the API service and recreate the API and frontend with `docker compose up -d --no-deps --force-recreate api frontend` (after the database, migrations, and seed have started).
+
+**Schema prerequisite:** `seed-demo.sql` targets the backend's current employee/department/category and audit-based time-entry model, including required task kind and assignment columns. Build the migrations and API images from the same updated backend checkout. The seed checks for M3 tables and fails with an explicit error rather than loading incompatible data into the old schema.
 
 Start PostgreSQL, run migrations, load demo data, and start the API and frontend:
 
@@ -24,7 +26,7 @@ docker compose up
 
 The frontend is at http://localhost:8081 and the API Swagger UI is at http://localhost:8080/swagger. Change `FRONTEND_PORT` or `API_PORT` in `.env` if those host ports are in use. PostgreSQL is exposed on `DB_PORT` (default 5432) for local development; containers reach it at `postgres:5432`.
 
-`migrations` and `seed` exit successfully before the API starts. The seed service runs `seed-demo.sql` automatically. On an empty migrated database it adds 30 demo users, 12 orders, 50 tasks, 246 time entries, and 220 reviews, including entries across several weeks and different review statuses. It also creates Identity login accounts for the demo users. Running it again does not duplicate rows or overwrite edits.
+`migrations` and `seed` exit successfully before the API starts. The seed service runs `seed-demo.sql` automatically. On an empty M3 database it adds 30 employees, 2 departments, 4 categories, 12 tasks, 240 time entries, 384 audits, and 144 reviews, including entries across several weeks and different review statuses. It also creates Identity login accounts, employee permissions, reviewer assignments, and a registration-period mode. Running it again does not duplicate rows or overwrite existing records.
 
 Use these local demo logins (the API's `ADMIN_*` bootstrap account is separate):
 
