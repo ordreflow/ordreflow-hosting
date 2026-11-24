@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../apps/ordreflow
+  - ingress.yaml
+images:
+  - name: ghcr.io/ordreflow/ordreflow-migrations
+    newTag: dev
+  - name: ghcr.io/ordreflow/ordreflow-api
+    newTag: dev
+  - name: ghcr.io/ordreflow/ordreflow-frontend
+    newTag: dev
+patches:
+  - path: api-release.yaml
+  - path: frontend-release.yaml
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/imagePullSecrets
+        value:
+          - name: ghcr-pull

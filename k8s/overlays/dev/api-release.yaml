@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: ordreflow
+spec:
+  template:
+    metadata:
+      annotations:
+        ordreflow.dev/backend-release-digest: dev # {"$imagepolicy": "flux-system:backend:digest"}
+    spec:
+      initContainers:
+        - name: migrate
+          imagePullPolicy: Always
+      containers:
+        - name: api
+          imagePullPolicy: Always

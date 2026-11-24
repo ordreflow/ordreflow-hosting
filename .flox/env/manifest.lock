@@ -6,11 +6,41 @@
       "curl": {
         "pkg-path": "curl"
       },
+      "docker-client": {
+        "pkg-path": "docker-client",
+        "pkg-group": "kubernetes",
+        "version": "29.6.0"
+      },
+      "fluxcd": {
+        "pkg-path": "fluxcd",
+        "pkg-group": "kubernetes",
+        "version": "2.9.0"
+      },
       "jq": {
         "pkg-path": "jq"
       },
+      "k3d": {
+        "pkg-path": "k3d",
+        "pkg-group": "kubernetes",
+        "version": "5.9.0"
+      },
+      "kubectl": {
+        "pkg-path": "kubectl",
+        "pkg-group": "kubernetes",
+        "version": "1.36.2"
+      },
+      "kustomize": {
+        "pkg-path": "kustomize",
+        "pkg-group": "kubernetes",
+        "version": "5.8.1"
+      },
       "openssh": {
         "pkg-path": "openssh"
+      },
+      "openssl": {
+        "pkg-path": "openssl",
+        "pkg-group": "kubernetes",
+        "version": "3.6.2"
       },
       "terraform": {
         "pkg-path": "terraform",
@@ -407,6 +437,593 @@
       },
       "system": "x86_64-linux",
       "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "docker-client",
+      "broken": false,
+      "derivation": "/nix/store/xjpqlbsblydsmzpc6j0gjpxkbpip3yv6-docker-29.6.0.drv",
+      "description": "Open source project to pack, ship and run any application as a lightweight container",
+      "install_id": "docker-client",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "docker-29.6.0",
+      "pname": "docker-client",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:12:55.507653Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "29.6.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/cgh7pk730fkzj2fdm725zfqz1ppj0za2-docker-29.6.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "docker-client",
+      "broken": false,
+      "derivation": "/nix/store/ylxfpd71zcn7930jcm329rhvlk0igysv-docker-29.6.0.drv",
+      "description": "Open source project to pack, ship and run any application as a lightweight container",
+      "install_id": "docker-client",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "docker-29.6.0",
+      "pname": "docker-client",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:41:22.230032Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "29.6.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/bkqiwbcznd9rm0rrvx672anyydi8qhrh-docker-29.6.0"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "docker-client",
+      "broken": false,
+      "derivation": "/nix/store/ljbvfcisj6bbxdgv0adxab27zqymn08l-docker-29.6.0.drv",
+      "description": "Open source project to pack, ship and run any application as a lightweight container",
+      "install_id": "docker-client",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "docker-29.6.0",
+      "pname": "docker-client",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:40:24.918195Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "29.6.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/glhfy7whxyvl4l6gzph4zl7ax78iga3w-docker-29.6.0"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "fluxcd",
+      "broken": false,
+      "derivation": "/nix/store/an719i1cjskfrxr13zf3z26mq77fvdm6-fluxcd-2.9.0.drv",
+      "description": "Open and extensible continuous delivery solution for Kubernetes",
+      "install_id": "fluxcd",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "fluxcd-2.9.0",
+      "pname": "fluxcd",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:12:55.882871Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/k7jligrbmi9lfd9f08ranz7qz8brd2y4-fluxcd-2.9.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "fluxcd",
+      "broken": false,
+      "derivation": "/nix/store/kjmlq2qhg2pkp8v78s16fcv7f66b3mb8-fluxcd-2.9.0.drv",
+      "description": "Open and extensible continuous delivery solution for Kubernetes",
+      "install_id": "fluxcd",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "fluxcd-2.9.0",
+      "pname": "fluxcd",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:41:22.818377Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/xbrim51svq8d38d4y8ryijzlxsh4z5w6-fluxcd-2.9.0"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "fluxcd",
+      "broken": false,
+      "derivation": "/nix/store/77inzxvxzxxiav425vsp6980mhaq6g21-fluxcd-2.9.0.drv",
+      "description": "Open and extensible continuous delivery solution for Kubernetes",
+      "install_id": "fluxcd",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "fluxcd-2.9.0",
+      "pname": "fluxcd",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:40:25.570724Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "2.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/4wrmjwdk958x9282q7a91h2w9k1yb1bp-fluxcd-2.9.0"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "k3d",
+      "broken": false,
+      "derivation": "/nix/store/x90zswlk1n6k8z1sacgxs45p0w8anq9x-k3d-5.9.0.drv",
+      "description": "Helper to run k3s (Lightweight Kubernetes. 5 less than k8s) in a docker container",
+      "install_id": "k3d",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "k3d-5.9.0",
+      "pname": "k3d",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:13:12.632156Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/ns0gsh8c00msc11pcxa5y6sq8brriyms-k3d-5.9.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "k3d",
+      "broken": false,
+      "derivation": "/nix/store/3l1fy0bmxdxiqd8dwvz36g5nca0xbs01-k3d-5.9.0.drv",
+      "description": "Helper to run k3s (Lightweight Kubernetes. 5 less than k8s) in a docker container",
+      "install_id": "k3d",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "k3d-5.9.0",
+      "pname": "k3d",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:41:44.425071Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/d2xq48mclqc9fvrhr1qcw3vr1ynb17h6-k3d-5.9.0"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "k3d",
+      "broken": false,
+      "derivation": "/nix/store/5cysjn5c3xjs1w0mik7i73ff42q8yvhv-k3d-5.9.0.drv",
+      "description": "Helper to run k3s (Lightweight Kubernetes. 5 less than k8s) in a docker container",
+      "install_id": "k3d",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "k3d-5.9.0",
+      "pname": "k3d",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:40:47.920591Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.9.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/9hlq86q7l6wb6hp715dndvc1wjkfhncs-k3d-5.9.0"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kubectl",
+      "broken": false,
+      "derivation": "/nix/store/s86spl0ddj3psrvk3sp70gx3bzqy74p2-kubectl-1.36.2.drv",
+      "description": "Kubernetes CLI",
+      "install_id": "kubectl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kubectl-1.36.2",
+      "pname": "kubectl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:13:13.247097Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.2",
+      "outputs_to_install": [
+        "man",
+        "man",
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "convert": "/nix/store/x3i9x1ky83wp5zyrcx3in6qq4vmj18p7-kubectl-1.36.2-convert",
+        "man": "/nix/store/xkfjvrsbdm163clwd08ncqfkgsrdzad6-kubectl-1.36.2-man",
+        "out": "/nix/store/5ffkf9jl4q5j8lc0hnjbzc8z0z13k2v0-kubectl-1.36.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kubectl",
+      "broken": false,
+      "derivation": "/nix/store/aghlqmkz63mi72sgv2ap7ar3640bk0h9-kubectl-1.36.2.drv",
+      "description": "Kubernetes CLI",
+      "install_id": "kubectl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kubectl-1.36.2",
+      "pname": "kubectl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:41:46.045523Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.2",
+      "outputs_to_install": [
+        "man",
+        "man",
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "convert": "/nix/store/ri4mg6hc4686zdp8f73cns68fkfwsyq8-kubectl-1.36.2-convert",
+        "man": "/nix/store/78isckjhiww09qw1nyh05y4xpnwcmfa8-kubectl-1.36.2-man",
+        "out": "/nix/store/37b8wvibnxkxp54ndndacvi72a81ylsb-kubectl-1.36.2"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kubectl",
+      "broken": false,
+      "derivation": "/nix/store/1w8ja2h4vqa4wqjdrrypzpg74qsnrg1c-kubectl-1.36.2.drv",
+      "description": "Kubernetes CLI",
+      "install_id": "kubectl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kubectl-1.36.2",
+      "pname": "kubectl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:40:49.593970Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "1.36.2",
+      "outputs_to_install": [
+        "man",
+        "man",
+        "out",
+        "out"
+      ],
+      "outputs": {
+        "convert": "/nix/store/rpqbz66l6znajvdmizzijf5skikh2ra2-kubectl-1.36.2-convert",
+        "man": "/nix/store/2g4hsvhjr30dyarlrqh2g1pg636bzlnr-kubectl-1.36.2-man",
+        "out": "/nix/store/3dd157118hzg4cmg87fg2mnjp3wkvrm8-kubectl-1.36.2"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kustomize",
+      "broken": false,
+      "derivation": "/nix/store/vimxk5lfcrvilparj5s3jxfc4sd3cims-kustomize-5.8.1.drv",
+      "description": "Customization of kubernetes YAML configurations",
+      "install_id": "kustomize",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kustomize-5.8.1",
+      "pname": "kustomize",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:13:13.354946Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.8.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/iqr1czjzzm9zsdn250gxs5rf6q1c6ryf-kustomize-5.8.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kustomize",
+      "broken": false,
+      "derivation": "/nix/store/8fr5jlzald3svfqgc7x5hi35wxipz0i9-kustomize-5.8.1.drv",
+      "description": "Customization of kubernetes YAML configurations",
+      "install_id": "kustomize",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kustomize-5.8.1",
+      "pname": "kustomize",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:41:46.173144Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.8.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/5fg6ic4bcmhxrqp7ylq2xwdgh4n6ik8i-kustomize-5.8.1"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "kustomize",
+      "broken": false,
+      "derivation": "/nix/store/waxjhqz9zy2lz7g7vfvf8vd486mds9sd-kustomize-5.8.1.drv",
+      "description": "Customization of kubernetes YAML configurations",
+      "install_id": "kustomize",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "kustomize-5.8.1",
+      "pname": "kustomize",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:40:49.726615Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "5.8.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/qr14kk804av1w3i5a2ais4srhrhj86aj-kustomize-5.8.1"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssl",
+      "broken": false,
+      "derivation": "/nix/store/hv2vcmspya5jkdjbvrlkkpr9h6s1igjv-openssl-3.6.2.drv",
+      "description": "Cryptographic library that implements the SSL and TLS protocols",
+      "install_id": "openssl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "openssl-3.6.2",
+      "pname": "openssl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:13:25.870490Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "bin",
+        "man",
+        "man",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/yc5k408761sswyyyfxpy70bh8grl6vjn-openssl-3.6.2-bin",
+        "dev": "/nix/store/imljdg4yyfhd6bj5lkyyqmpnmxsxp731-openssl-3.6.2-dev",
+        "doc": "/nix/store/zqmfagha2mp1i64cz7y483cv375zrjz9-openssl-3.6.2-doc",
+        "man": "/nix/store/87ww150bx786rqgcki0kkfhm26b1y5ds-openssl-3.6.2-man",
+        "out": "/nix/store/5ya380l3qxlxqngvdrw8nw6l7r8s4v05-openssl-3.6.2"
+      },
+      "system": "aarch64-darwin",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssl",
+      "broken": false,
+      "derivation": "/nix/store/gi61ha0agh3n6p3y16b2kp50kl7d318k-openssl-3.6.2.drv",
+      "description": "Cryptographic library that implements the SSL and TLS protocols",
+      "install_id": "openssl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "openssl-3.6.2",
+      "pname": "openssl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T03:42:07.796191Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "man",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/y2wn0af8r6l6r44r407091nbzgy7aw8z-openssl-3.6.2-bin",
+        "debug": "/nix/store/yvqrzd7rh5q162g5c6qpbpqfbhcvyzw2-openssl-3.6.2-debug",
+        "dev": "/nix/store/y72ifccbibr9w79xjxn8826qp50l8ldj-openssl-3.6.2-dev",
+        "doc": "/nix/store/q04r6vbmcl6qib2dyp0h2cnw26psh653-openssl-3.6.2-doc",
+        "man": "/nix/store/krfyg78k7lckjkgl4ccxrg1p013s64f9-openssl-3.6.2-man",
+        "out": "/nix/store/dqg64dq39jl4n7wy1n7schdv8lrllbry-openssl-3.6.2"
+      },
+      "system": "aarch64-linux",
+      "group": "kubernetes",
+      "priority": 5
+    },
+    {
+      "attr_path": "openssl",
+      "broken": false,
+      "derivation": "/nix/store/siijj43syp206hcmiczixh602mrnd3ik-openssl-3.6.2.drv",
+      "description": "Cryptographic library that implements the SSL and TLS protocols",
+      "install_id": "openssl",
+      "license": "Apache-2.0",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=d407951447dcd00442e97087bf374aad70c04cea",
+      "name": "openssl-3.6.2",
+      "pname": "openssl",
+      "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+      "rev_count": 1027867,
+      "rev_date": "2026-07-05T04:06:12Z",
+      "scrape_date": "2026-07-06T04:41:13.545320Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "3.6.2",
+      "outputs_to_install": [
+        "bin",
+        "bin",
+        "bin",
+        "bin",
+        "bin",
+        "man",
+        "man",
+        "man",
+        "man"
+      ],
+      "outputs": {
+        "bin": "/nix/store/clvbx203wyqkdnqc5ngyhjlhcqn5s9x9-openssl-3.6.2-bin",
+        "debug": "/nix/store/029b2avw85i19v6vvxvrrx15kmg29kpr-openssl-3.6.2-debug",
+        "dev": "/nix/store/i0jqva96qfgc76g8w7jbyiv6h3si07b9-openssl-3.6.2-dev",
+        "doc": "/nix/store/32xivk30pdrnhhn2774dha3xphwcgb2v-openssl-3.6.2-doc",
+        "man": "/nix/store/0wv0fnqsp138dln7cx229hlf8qm553p5-openssl-3.6.2-man",
+        "out": "/nix/store/l0vl4dali2mvbpi30a8da1f71jl85myg-openssl-3.6.2"
+      },
+      "system": "x86_64-linux",
+      "group": "kubernetes",
       "priority": 5
     }
   ]
