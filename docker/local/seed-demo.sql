@@ -136,7 +136,9 @@ ON CONFLICT (id) DO NOTHING;
 
 WITH managers(slot, id) AS (
     VALUES (1, '6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid),
-           (2, '22222222-2222-2222-2222-222222222222'::uuid),
+           (2, '22222222-2222-2222-2222-2222222
+
+22222'::uuid),
            (3, md5('ordreflow:demo:manager:1')::uuid),
            (4, md5('ordreflow:demo:manager:2')::uuid)
 )
