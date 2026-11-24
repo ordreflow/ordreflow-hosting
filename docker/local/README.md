@@ -26,7 +26,7 @@ docker compose up
 
 The frontend is at http://localhost:8081 and the API Swagger UI is at http://localhost:8080/swagger. Change `FRONTEND_PORT` or `API_PORT` in `.env` if those host ports are in use. PostgreSQL is exposed on `DB_PORT` (default 5432) for local development; containers reach it at `postgres:5432`.
 
-`migrations` and `seed` exit successfully before the API starts. The seed service runs `seed-demo.sql` automatically. On an empty M3 database it adds 30 employees, 2 departments, 4 categories, 12 tasks, 240 time entries, 384 audits, and 144 reviews, including entries across several weeks and different review statuses. It also creates Identity login accounts, employee permissions, reviewer assignments, and a registration-period mode. Running it again does not duplicate rows or overwrite existing records.
+`migrations` and `seed` exit successfully before the API starts. The seed service runs `seed-demo.sql` automatically. On an empty migrated database it adds 30 employees, 4 departments, 4 categories, 12 tasks, 72 time entries, 120 audits, and 48 reviews, including ready, approved, and rejected entries. It also creates Identity login accounts, employee permissions, reviewer assignments, and a registration-period mode. Running it again does not duplicate rows or overwrite existing records.
 
 Use these local demo logins (the API's `ADMIN_*` bootstrap account is separate):
 

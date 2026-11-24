@@ -2,6 +2,38 @@
 -- Fixed IDs and ON CONFLICT keep this safe to rerun without overwriting edits.
 BEGIN;
 
+DO $$
+BEGIN
+    IF to_regclass('employees') IS NULL OR to_regclass('time_entry_audits') IS NULL
+       OR NOT EXISTS (SELECT 1 FROM information_schema.columns
+                      WHERE table_schema = current_schema() AND table_name = 'tasks' AND column_name = 'kind')
+       OR NOT EXISTS (SELECT 1 FROM information_schema.columns
+                      WHERE table_schema = current_schema() AND table_name = 'tasks' AND column_name = 'assignment_only') THEN
+        RAISE EXCEPTION 'Demo seed requires the current backend migration (including task kind and assignment_only)';
+    END IF;
+END $$;
+
+-- Only newly created demo employees receive seed permissions. Rerunning the
+-- seed must not grant access to unrelated employees or undo revoked access.
+CREATE TEMP TABLE demo_employee_ids ON COMMIT DROP AS
+SELECT demo.id FROM (
+    VALUES ('11111111-1111-4111-8111-111111111111'::uuid),
+           ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid),
+           ('22222222-2222-2222-2222-222222222222'::uuid),
+           ('5e530cd5-924a-445d-84ef-69bfb21ee241'::uuid),
+           ('33333333-3333-4333-8333-333333333333'::uuid),
+           ('44444444-4444-4444-8444-444444444444'::uuid),
+           ('55555555-5555-4555-8555-555555555555'::uuid)
+    UNION ALL
+    SELECT md5('ordreflow:demo:manager:' || n)::uuid FROM generate_series(1, 2) AS managers(n)
+    UNION ALL
+    SELECT md5('ordreflow:demo:employee:' || n)::uuid FROM generate_series(1, 21) AS employees(n)
+) AS demo(id);
+
+CREATE TEMP TABLE demo_new_employees ON COMMIT DROP AS
+SELECT demo.id FROM demo_employee_ids demo
+WHERE NOT EXISTS (SELECT 1 FROM employees WHERE employees.id = demo.id);
+
 INSERT INTO employees (id, name, email, status, title, created_at) VALUES
     ('11111111-1111-4111-8111-111111111111', 'Alex Admin', 'alex.admin@example.com', 'Active', NULL, CURRENT_TIMESTAMP - INTERVAL '30 days'),
     ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520', 'Morgan Manager', 'morgan.manager@example.com', 'Active', NULL, CURRENT_TIMESTAMP - INTERVAL '28 days'),
@@ -30,23 +62,26 @@ ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO employee_system_accesses (employee_id, permission)
 SELECT id, 'Employee'
-FROM employees
-WHERE id <> '11111111-1111-4111-8111-111111111111'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO employee_system_accesses (employee_id, permission) VALUES
-    ('11111111-1111-4111-8111-111111111111', 'Employee'),
-    ('11111111-1111-4111-8111-111111111111', 'Administrator'),
-    ('11111111-1111-4111-8111-111111111111', 'Payroll'),
-    ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520', 'DepartmentManager'),
-    ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520', 'CatagoryReviewer'),
-    ('22222222-2222-2222-2222-222222222222', 'DepartmentManager'),
-    ('22222222-2222-2222-2222-222222222222', 'CatagoryReviewer')
+FROM demo_new_employees
 ON CONFLICT DO NOTHING;
 
 INSERT INTO employee_system_accesses (employee_id, permission)
-SELECT md5('ordreflow:demo:manager:' || n)::uuid, permission
+SELECT demo.id, access.permission
+FROM demo_new_employees demo
+JOIN (VALUES
+    ('11111111-1111-4111-8111-111111111111'::uuid, 'Administrator'),
+    ('11111111-1111-4111-8111-111111111111'::uuid, 'Payroll'),
+    ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid, 'DepartmentManager'),
+    ('6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid, 'CatagoryReviewer'),
+    ('22222222-2222-2222-2222-222222222222'::uuid, 'DepartmentManager'),
+    ('22222222-2222-2222-2222-222222222222'::uuid, 'CatagoryReviewer')
+) AS access(id, permission) ON access.id = demo.id
+ON CONFLICT DO NOTHING;
+
+INSERT INTO employee_system_accesses (employee_id, permission)
+SELECT demo.id, permissions.permission
 FROM generate_series(1, 2) AS managers(n)
+JOIN demo_new_employees demo ON demo.id = md5('ordreflow:demo:manager:' || n)::uuid
 CROSS JOIN (VALUES ('DepartmentManager'), ('CatagoryReviewer')) AS permissions(permission)
 ON CONFLICT DO NOTHING;
 
@@ -67,14 +102,8 @@ SELECT md5('ordreflow:demo:account:' || employee.id::text)::uuid,
        md5('ordreflow:demo:security:' || employee.id::text),
        md5('ordreflow:demo:concurrency:' || employee.id::text),
        false, false, true, 0
-FROM employees employee
-WHERE employee.email IN (
-    'alex.admin@example.com', 'morgan.manager@example.com', 'sam.manager@example.com',
-    'casey.employee@example.com', 'jordan.employee@example.com', 'taylor.employee@example.com',
-    'robin.inactive@example.com'
-)
-   OR employee.email LIKE 'demo.manager%@example.com'
-   OR employee.email LIKE 'demo.employee%@example.com'
+FROM demo_employee_ids demo
+JOIN employees employee ON employee.id = demo.id
 ON CONFLICT DO NOTHING;
 
 WITH managers(slot, id) AS (
@@ -127,18 +156,17 @@ WITH managers(slot, id) AS (
 INSERT INTO catagories (
     id, created_by, department_id, name, description, status, internal_only, created_at, closed_at
 )
-SELECT md5('ordreflow:demo:category:' || slot)::uuid, id,
+SELECT md5('ordreflow:demo:category:' || slot)::uuid, managers.id,
        md5('ordreflow:demo:department:' || slot)::uuid,
        'General work', 'Shared demo work items', 'Active', false,
-       CURRENT_TIMESTAMP - INTERVAL '80 days', NULL
+       greatest(manager.created_at + INTERVAL '1 day', CURRENT_TIMESTAMP - INTERVAL '80 days'), NULL
 FROM managers
+JOIN employees manager ON manager.id = managers.id
 ON CONFLICT (id) DO NOTHING;
 
 WITH managers(slot, id) AS (
     VALUES (1, '6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid),
-           (2, '22222222-2222-2222-2222-2222222
-
-22222'::uuid),
+           (2, '22222222-2222-2222-2222-222222222222'::uuid),
            (3, md5('ordreflow:demo:manager:1')::uuid),
            (4, md5('ordreflow:demo:manager:2')::uuid)
 )
@@ -149,15 +177,16 @@ ON CONFLICT DO NOTHING;
 
 INSERT INTO tasks (id, catagory_id, name, description, kind, assignment_only, status, created_at, closed_at)
 SELECT md5('ordreflow:demo:task:' || n)::uuid,
-       md5('ordreflow:demo:category:' || (((n - 1) % 4) + 1))::uuid,
+       category.id,
        (ARRAY[
            'Plan work', 'Prepare design', 'Implement feature', 'Review changes',
            'Test release', 'Update documentation'
        ])[((n - 1) % 6) + 1],
        'Demo work item ' || n,
        (ARRAY['Task', 'Project', 'Ticket'])[((n - 1) % 3) + 1],
-       false, 'Active', CURRENT_TIMESTAMP - INTERVAL '60 days', NULL
+       false, 'Active', greatest(category.created_at + INTERVAL '1 day', CURRENT_TIMESTAMP - INTERVAL '60 days'), NULL
 FROM generate_series(1, 12) AS work_items(n)
+JOIN catagories category ON category.id = md5('ordreflow:demo:category:' || ((n - 1) / 3 + 1))::uuid
 ON CONFLICT (id) DO NOTHING;
 
 WITH membership(employee_id, slot) AS (
@@ -179,72 +208,64 @@ WITH membership(employee_id, slot) AS (
 ), entries AS (
     INSERT INTO time_entries (id, revision, employee_id)
     SELECT md5('ordreflow:demo:time-entry:' || entry.employee_id::text || ':' || sample.number)::uuid,
-           1, entry.employee_id
+           CASE WHEN sample.number = 1 THEN 1 ELSE 2 END, entry.employee_id
     FROM entry_rows entry
     CROSS JOIN generate_series(1, 3) AS sample(number)
     ON CONFLICT (id) DO NOTHING
     RETURNING id, employee_id
-), entry_audits AS (
+), initial_audits AS (
     INSERT INTO time_entry_audits (
         id, time_entry_id, actor_id, closed_by, task_id, work_date, duration, description, status, audit_time
     )
-    SELECT md5('ordreflow:demo:audit:' || time_entry.id::text)::uuid,
-           time_entry.id,
-           CASE sample.number WHEN 3 THEN entry.reviewer_id ELSE entry.employee_id END,
-           NULL,
+    SELECT md5('ordreflow:demo:audit:initial:' || time_entry.id::text)::uuid,
+           time_entry.id, entry.employee_id, NULL,
            md5('ordreflow:demo:task:' || (((entry.slot - 1) * 3) + sample.number))::uuid,
            CURRENT_DATE - ((sample.number - 1) * 3),
-           2.50, 'Demo time entry',
-           CASE sample.number
-               WHEN 1 THEN 'Draft'
-               WHEN 2 THEN 'ReadyForApproval'
-               WHEN 3 THEN CASE
-                   WHEN right(entry.employee_id::text, 1) IN ('1', '3', '5', '7', '9', 'b', 'd', 'f')
-                       THEN 'Rejected'
-                   ELSE 'Approved'
-               END
-           END,
-           CURRENT_TIMESTAMP - INTERVAL '1 hour'
+           2.50, 'Demo time entry', 'ReadyForApproval', CURRENT_TIMESTAMP - INTERVAL '1 hour'
     FROM entry_rows entry
     CROSS JOIN generate_series(1, 3) AS sample(number)
     JOIN entries time_entry
       ON time_entry.employee_id = entry.employee_id
      AND time_entry.id = md5('ordreflow:demo:time-entry:' || entry.employee_id::text || ':' || sample.number)::uuid
-    ON CONFLICT (id) DO NOTHING
-    RETURNING time_entry_id, actor_id, task_id, status, audit_time
+    RETURNING time_entry_id
+), decision_audits AS (
+    INSERT INTO time_entry_audits (
+        id, time_entry_id, actor_id, closed_by, task_id, work_date, duration, description, status, audit_time
+    )
+    SELECT md5('ordreflow:demo:audit:decision:' || time_entry.time_entry_id::text)::uuid,
+           time_entry.time_entry_id, entry.reviewer_id, NULL,
+           md5('ordreflow:demo:task:' || (((entry.slot - 1) * 3) + sample.number))::uuid,
+           CURRENT_DATE - ((sample.number - 1) * 3),
+           2.50, 'Demo time entry',
+           CASE sample.number WHEN 2 THEN 'Rejected' ELSE 'Approved' END,
+           CURRENT_TIMESTAMP - INTERVAL '30 minutes'
+    FROM entry_rows entry
+    CROSS JOIN generate_series(2, 3) AS sample(number)
+    JOIN initial_audits time_entry
+      ON time_entry.time_entry_id = md5('ordreflow:demo:time-entry:' || entry.employee_id::text || ':' || sample.number)::uuid
+    RETURNING time_entry_id, actor_id, status, audit_time
 )
-INSERT INTO task_assinments (task_id, assigned_to, expected_duration, expected_deadline)
-SELECT DISTINCT
-       md5('ordreflow:demo:task:' || (((membership.slot - 1) * 3) + sample.number))::uuid,
-       membership.employee_id, 8, CURRENT_DATE + 30
-FROM membership
-CROSS JOIN generate_series(1, 3) AS sample(number)
-ON CONFLICT DO NOTHING;
+INSERT INTO time_entry_reviews (id, time_entry_id, reviewer_id, description, status, reviewed_at_utc)
+SELECT md5('ordreflow:demo:review:' || audit.time_entry_id::text)::uuid,
+       audit.time_entry_id, audit.actor_id,
+       CASE WHEN audit.status = 'Rejected' THEN 'Please add more detail to this entry.' END,
+       audit.status, audit.audit_time
+FROM decision_audits audit;
 
-WITH memberships(employee_id, slot) AS (
+WITH membership(employee_id, slot) AS (
     VALUES ('5e530cd5-924a-445d-84ef-69bfb21ee241'::uuid, 1),
            ('33333333-3333-4333-8333-333333333333'::uuid, 1),
            ('44444444-4444-4444-8444-444444444444'::uuid, 2)
     UNION ALL
     SELECT md5('ordreflow:demo:employee:' || n)::uuid, ((n - 1) % 4) + 1
     FROM generate_series(1, 21) AS employees(n)
-), reviewers(slot, reviewer_id) AS (
-    VALUES (1, '6da7cc94-0ea4-4d98-84a8-10d8b5ce2520'::uuid),
-           (2, '22222222-2222-2222-2222-222222222222'::uuid),
-           (3, md5('ordreflow:demo:manager:1')::uuid),
-           (4, md5('ordreflow:demo:manager:2')::uuid)
 )
-INSERT INTO time_entry_reviews (id, time_entry_id, reviewer_id, description, status, reviewed_at_utc)
-SELECT md5('ordreflow:demo:review:' || time_entry.id::text)::uuid,
-       time_entry.id, reviewers.reviewer_id,
-       CASE audit.status WHEN 'Rejected' THEN 'Please add more detail to this entry.' ELSE NULL END,
-       audit.status, audit.audit_time + INTERVAL '30 minutes'
-FROM time_entry_audits audit
-JOIN time_entries time_entry ON time_entry.id = audit.time_entry_id
-JOIN memberships ON memberships.employee_id = time_entry.employee_id
-JOIN reviewers USING (slot)
-WHERE audit.status IN ('Approved', 'Rejected')
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO task_assinments (task_id, assigned_to, expected_duration, expected_deadline)
+SELECT md5('ordreflow:demo:task:' || (((membership.slot - 1) * 3) + sample.number))::uuid,
+       membership.employee_id, 8, CURRENT_DATE + 30
+FROM membership
+CROSS JOIN generate_series(1, 3) AS sample(number)
+ON CONFLICT DO NOTHING;
 
 INSERT INTO registration_period_modes (id, admin_id, interval, day_in_month, created_date)
 VALUES (
