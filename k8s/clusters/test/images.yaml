@@ -8,8 +8,6 @@ spec:
   # for both :dev workloads; no separate API ImageRepository is needed.
   image: ghcr.io/ordreflow/ordreflow-migrations
   interval: 1m
-  secretRef:
-    name: ghcr-pull
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
@@ -35,8 +33,6 @@ metadata:
 spec:
   image: ghcr.io/ordreflow/ordreflow-frontend
   interval: 1m
-  secretRef:
-    name: ghcr-pull
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy

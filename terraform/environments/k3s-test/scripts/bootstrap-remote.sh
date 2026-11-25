@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IFS= read -r ghcr_username
-IFS= read -r ghcr_token
 IFS= read -r app_host
 IFS= read -r acme_email
 
@@ -16,11 +14,7 @@ done
 
 for namespace in flux-system ordreflow; do
   kubectl create namespace "$namespace" --dry-run=client -o yaml | kubectl apply -f -
-  kubectl -n "$namespace" create secret docker-registry ghcr-pull \
-    --docker-server=ghcr.io --docker-username="$ghcr_username" \
-    --docker-password="$ghcr_token" --dry-run=client -o yaml | kubectl apply -f -
 done
-unset ghcr_token
 
 kubectl -n flux-system create configmap k3s-test-settings \
   --from-literal=APP_HOST="$app_host" --from-literal=ACME_EMAIL="$acme_email" \

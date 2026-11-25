@@ -13,10 +13,3 @@ images:
 patches:
   - path: api-release.yaml
   - path: frontend-release.yaml
-  - target:
-      kind: Deployment
-    patch: |-
-      - op: add
-        path: /spec/template/spec/imagePullSecrets
-        value:
-          - name: ghcr-pull

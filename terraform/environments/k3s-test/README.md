@@ -1,10 +1,10 @@
 # Hetzner K3s dev profile
 
-This Terraform root has independent state from [`../test`](../test). `terraform apply` provisions the K3s VPS and DNS, registers a write-enabled GitHub deploy key, installs Flux, creates the application and GHCR pull secrets in the cluster, and waits for the API and frontend to respond over HTTPS. Flux then watches `k8s/clusters/test` on `main` and automatically deploys changes.
+This Terraform root has independent state from [`../test`](../test). `terraform apply` provisions the K3s VPS and DNS, registers a write-enabled GitHub deploy key, installs Flux, creates the application secret in the cluster, and waits for the API and frontend to respond over HTTPS. Flux then watches `k8s/clusters/test` on `main` and automatically deploys changes. The OrdreFlow `:dev` images are publicly pullable from GHCR, so neither Flux nor Kubernetes needs registry credentials.
 
 ## One-time inputs
 
-Activate the repository's Flox environment first (`flox activate`); the bootstrap scripts use its Terraform, SSH, and `jq` tools. From the hosting repository root, fill in the example configuration. Use a new DNS-only hostname, a real Let's Encrypt contact address (also used as the initial admin login), the GitHub username owning your package-read token, and the SSH private key path matching the key registered in Hetzner:
+Activate the repository's Flox environment first (`flox activate`); the bootstrap scripts use its Terraform, SSH, and `jq` tools. From the hosting repository root, fill in the example configuration. Use a new DNS-only hostname, a real Let's Encrypt contact address (also used as the initial admin login), and the SSH private key path matching the key registered in Hetzner:
 
 ```sh
 cp terraform/environments/k3s-test/terraform.tfvars.example terraform/environments/k3s-test/terraform.tfvars
@@ -15,11 +15,10 @@ Export these credentials in the same shell before `terraform apply`:
 ```sh
 export HCLOUD_TOKEN='your-hetzner-token'
 export CLOUDFLARE_API_TOKEN='your-cloudflare-token'
-export GITHUB_TOKEN='github-token-with-repo-admin-and-read-packages'
-export TF_VAR_ghcr_token="$GITHUB_TOKEN"
+export GITHUB_TOKEN='github-token-allowed-to-manage-deploy-keys'
 ```
 
-The GitHub token needs permission to add a **write-enabled deploy key** to `ordreflow/ordreflow-hosting` and to pull the three GHCR packages. It is read from the environment, not `terraform.tfvars`. Terraform's `ghcr_token` input is ephemeral: neither it nor the server-generated application credentials are kept in state or cloud-init. The server stores the Flux private key and Kubernetes secrets. Your workstation needs SSH access to the VPS to complete apply; Kubernetes port 6443 remains closed to the internet.
+The GitHub token is needed **only during Terraform operations** to register/manage the write-enabled deploy key for `ordreflow/ordreflow-hosting`. Reading this public repo and pulling its public GHCR images needs no token. The token comes from the environment, not `terraform.tfvars` or cloud-init; Terraform state contains only the deploy key's public half. The server generates the application credentials and stores the Flux private key and Kubernetes secret. Your workstation needs SSH access to the VPS to complete apply; Kubernetes port 6443 remains closed to the internet. If you previously set `ghcr_username` in your ignored `terraform.tfvars`, remove that obsolete entry.
 
 The updated GitOps files under `k8s/` must be on `main` before applying. If `main` is protected, its rules must permit commits by the write-enabled deploy key for Flux image automation.
 

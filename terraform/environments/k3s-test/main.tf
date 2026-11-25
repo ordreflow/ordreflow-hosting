@@ -105,8 +105,8 @@ resource "github_repository_deploy_key" "flux" {
   read_only  = false
 }
 
-# Secrets are sent via an ephemeral provisioner environment to the server over
-# SSH. Terraform state and Hetzner user_data contain no GitHub or app secrets.
+# Application credentials are generated on the server. GitHub credentials are
+# used by the provider to register a deploy key, not sent to the server.
 resource "terraform_data" "bootstrap" {
   triggers_replace = [
     hcloud_server.k3s.id,
@@ -115,7 +115,6 @@ resource "terraform_data" "bootstrap" {
     filesha256("${path.module}/scripts/run-bootstrap.sh"),
     var.hostname,
     var.acme_email,
-    var.ghcr_username,
   ]
   depends_on = [cloudflare_dns_record.k3s]
 
@@ -125,8 +124,6 @@ resource "terraform_data" "bootstrap" {
       SERVER_IP            = hcloud_server.k3s.ipv4_address
       SSH_PRIVATE_KEY_PATH = pathexpand(var.ssh_private_key_path)
       BOOTSTRAP_SCRIPT     = "${path.module}/scripts/bootstrap-remote.sh"
-      GHCR_USERNAME        = var.ghcr_username
-      GHCR_TOKEN           = var.ghcr_token
       APP_HOST             = var.hostname
       ACME_EMAIL           = var.acme_email
     }
