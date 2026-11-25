@@ -56,3 +56,36 @@ variable "k3s_version" {
     error_message = "k3s_version must be a pinned version such as v1.37.2+k3s1."
   }
 }
+
+variable "ssh_private_key_path" {
+  description = "Path to the private SSH key registered under ssh_key_name. Only its path enters Terraform state."
+  type        = string
+  default     = "~/.ssh/ordreflow-test"
+}
+
+variable "ghcr_username" {
+  description = "GitHub username associated with the package-read token used to pull private GHCR images."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[A-Za-z0-9-]+$", var.ghcr_username))
+    error_message = "ghcr_username must be a GitHub username."
+  }
+}
+
+variable "ghcr_token" {
+  description = "Package-read token supplied via TF_VAR_ghcr_token for this apply only; not stored in state or plan."
+  type        = string
+  sensitive   = true
+  ephemeral   = true
+}
+
+variable "acme_email" {
+  description = "Let's Encrypt contact address; also used for the first application admin login."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[^@[:space:]]+@[^@[:space:]]+\\.[^@[:space:]]+$", var.acme_email))
+    error_message = "acme_email must be a valid email address."
+  }
+}

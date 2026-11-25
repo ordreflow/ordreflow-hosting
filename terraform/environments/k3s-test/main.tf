@@ -1,6 +1,6 @@
 locals {
-  # Cluster credentials and application secrets are deliberately not stored in
-  # Terraform state or cloud-init. Flux and secrets are bootstrapped separately.
+  # Cloud-init only installs K3s. The apply-time bootstrap registers a public
+  # deploy key and creates secrets on the host without storing them in state.
   cloud_init = "#cloud-config\n${yamlencode({
     package_update = true
     packages       = ["curl", "ca-certificates"]
@@ -73,4 +73,62 @@ resource "cloudflare_dns_record" "k3s" {
   content = hcloud_server.k3s.ipv4_address
   ttl     = 1
   proxied = false
+}
+
+# Create a deploy key on the server, not in Terraform state. The public key is
+# safe to store in state; GitHub credentials are read by the provider from GITHUB_TOKEN.
+resource "terraform_data" "flux_key" {
+  triggers_replace = [hcloud_server.k3s.id]
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/create-flux-key.sh"
+    environment = {
+      SERVER_IP            = hcloud_server.k3s.ipv4_address
+      SSH_PRIVATE_KEY_PATH = pathexpand(var.ssh_private_key_path)
+    }
+  }
+}
+
+data "external" "flux_public_key" {
+  depends_on = [terraform_data.flux_key]
+  program    = ["bash", "${path.module}/scripts/read-flux-key.sh"]
+  query = {
+    server_ip            = hcloud_server.k3s.ipv4_address
+    ssh_private_key_path = pathexpand(var.ssh_private_key_path)
+  }
+}
+
+resource "github_repository_deploy_key" "flux" {
+  repository = "ordreflow-hosting"
+  title      = "${var.server_name}-flux"
+  key        = data.external.flux_public_key.result.public_key
+  read_only  = false
+}
+
+# Secrets are sent via an ephemeral provisioner environment to the server over
+# SSH. Terraform state and Hetzner user_data contain no GitHub or app secrets.
+resource "terraform_data" "bootstrap" {
+  triggers_replace = [
+    hcloud_server.k3s.id,
+    github_repository_deploy_key.flux.id,
+    filesha256("${path.module}/scripts/bootstrap-remote.sh"),
+    filesha256("${path.module}/scripts/run-bootstrap.sh"),
+    var.hostname,
+    var.acme_email,
+    var.ghcr_username,
+  ]
+  depends_on = [cloudflare_dns_record.k3s]
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/run-bootstrap.sh"
+    environment = {
+      SERVER_IP            = hcloud_server.k3s.ipv4_address
+      SSH_PRIVATE_KEY_PATH = pathexpand(var.ssh_private_key_path)
+      BOOTSTRAP_SCRIPT     = "${path.module}/scripts/bootstrap-remote.sh"
+      GHCR_USERNAME        = var.ghcr_username
+      GHCR_TOKEN           = var.ghcr_token
+      APP_HOST             = var.hostname
+      ACME_EMAIL           = var.acme_email
+    }
+  }
 }

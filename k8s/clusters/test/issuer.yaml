@@ -13,5 +13,6 @@ spec:
     kind: GitRepository
     name: flux-system
   postBuild:
-    substitute:
-      ACME_EMAIL: admin@example.com # Replace before bootstrapping Flux.
+    substituteFrom:
+      - kind: ConfigMap
+        name: k3s-test-settings

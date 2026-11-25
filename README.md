@@ -3,7 +3,7 @@
 - [`docker/local/README.md`](docker/local/README.md) describes the local Docker Compose setup and its demo logins.
 - [`docker/mvp/README.md`](docker/mvp/README.md) runs the public `:mvp` images in a separate local Docker Compose stack.
 - [`terraform/environments/test/README.md`](terraform/environments/test/README.md) describes the disposable Hetzner Cloud test deployment with Cloudflare DNS and HTTPS.
-- [`k8s/README.md`](k8s/README.md) describes the dev K3s + Flux GitOps profile and the local k3d profile; [`terraform/environments/k3s-test/README.md`](terraform/environments/k3s-test/README.md) provisions the dev server.
+- [`k8s/README.md`](k8s/README.md) describes the dev K3s + Flux GitOps profile and the local k3d profile; [`terraform/environments/k3s-test/README.md`](terraform/environments/k3s-test/README.md) provisions and bootstraps dev.
 
 ## Local infrastructure tools
 

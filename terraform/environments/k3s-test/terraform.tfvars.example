@@ -2,5 +2,8 @@ hostname           = "k3s-test.example.com"
 cloudflare_zone_id = "replace-with-cloudflare-zone-id"
 ssh_key_name       = "replace-with-hetzner-ssh-key-name"
 ssh_allowed_cidrs  = ["203.0.113.10/32"]
+ghcr_username      = "replace-with-ghcr-token-owner"
+acme_email         = "replace-with-your-email@example.com"
 
-# Optional: server_name, server_type, location, k3s_version.
+# Optional: server_name, server_type, location, k3s_version, ssh_private_key_path.
+# GITHUB_TOKEN and TF_VAR_ghcr_token are environment variables, never tfvars.

@@ -13,5 +13,6 @@ spec:
     kind: GitRepository
     name: flux-system
   postBuild:
-    substitute:
-      APP_HOST: test.alperenozer.dk # Must match the Terraform hostname.
+    substituteFrom:
+      - kind: ConfigMap
+        name: k3s-test-settings
